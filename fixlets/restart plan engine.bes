@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BES xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="BES.xsd">
+	<Task>
+		<Title>Restrat PlanEngine</Title>
+		<Description><![CDATA[<B>Note:</B> This task is specifically for use as a step within an Automation Plan.<BR><BR>This task restarts endpoints that are in a Pending Restart state and waits for the restart to complete before moving on to the next step in the Automation Plan.<BR>The Automation Plan engine will <B>always</B> wait for this task to complete, regardless of the pending restart settings configured for the Automation Plan within which it is used.]]></Description>
+		<Relevance>(if exists property "in proxy agent context" then ( not in proxy agent context ) else true )</Relevance>
+		<Category>Server Automation</Category>
+		<Source>HACK</Source>
+		<SourceID>201504211225</SourceID>
+		<SourceSeverity></SourceSeverity>
+		<MIMEField>
+			<Name>x-fixlet-modification-time</Name>
+			<Value>Wed, 12 Nov 2014 18:00:00 +0000</Value>
+		</MIMEField>
+		<DefaultAction ID="Action1">
+			<Description>
+				<PreLink>Click </PreLink>
+				<Link>here</Link>
+				<PostLink><![CDATA[&nbsp;to deploy this action.]]></PostLink>
+			</Description>
+			<ActionScript MIMEType="application/x-Fixlet-Windows-Shell">// !#/plan-engine/override::pending-restart=wait
+			parameter "PE_ROOT" ="/home/ec2-user/BigFix/Applications/PlanEngine"			
+			parameter "HOST_IP" = " [your host IP address]"
+			parameter "RE" ="yes"
+            wait /bin/bash -c " {parameter "PE_ROOT"}/init.sh {parameter "HOST_IP"} {parameter "RE"}" </ActionScript>
+		</DefaultAction>
+	</Task>
+</BES>

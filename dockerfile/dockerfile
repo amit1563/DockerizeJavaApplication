@@ -1,0 +1,23 @@
+
+# ubantu image avilable at docker repo ubuntu
+FROM pe/ubuntu
+
+# getting os related required dependencies to run plan engine
+RUN apt-get update \
+&& apt-get install -y unzip \
+&& apt-get update && apt-get install -y ksh \
+&& sudo dpkg --add-architecture i386 \
+&& apt-get update  &&  apt-get install -y libgcc1:i386
+
+# planengine.xml will pe generated inside Config folder
+RUN mkdir -p /Config
+COPY Config    /Config
+#copy planEngine binary files to the container directory /PlanEngine (we can get it from repo later)
+COPY PlanEngine  /PlanEngine
+Copy CryptoUtility.exe /
+COPY MFS-Linux /
+#make planengine.sh file executable
+RUN chmod +x  /PlanEngine/bin/planengine.sh
+#will run PlanEngine/bin/planengine.sh once image will be build successfully
+ENTRYPOINT ["/PlanEngine/bin/planengine.sh"]
+
